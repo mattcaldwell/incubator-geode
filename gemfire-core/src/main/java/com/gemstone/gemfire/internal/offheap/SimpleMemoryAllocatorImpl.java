@@ -527,6 +527,18 @@ public final class SimpleMemoryAllocatorImpl implements MemoryAllocator, MemoryI
     }
 
     @Override
+    public void sendAsByteArray(DataOutput out) throws IOException {
+      byte[] bytes;
+      if (isSerialized()) {
+        bytes = getSerializedValue();
+      } else {
+        bytes = (byte[]) getDeserializedForReading();
+      }
+      DataSerializer.writeByteArray(bytes, out);
+      
+    }
+
+    @Override
     public boolean isSerialized() {
       return OffHeapRegionEntryHelper.isSerialized(this.address);
     }
@@ -1815,6 +1827,20 @@ public final class SimpleMemoryAllocatorImpl implements MemoryAllocator, MemoryI
         }
       }
       super.sendTo(out);
+    }
+    
+    @Override
+    public void sendAsByteArray(DataOutput out) throws IOException {
+      if (!isCompressed() && out instanceof HeapDataOutputStream) {
+        ByteBuffer bb = createDirectByteBuffer();
+        if (bb != null) {
+          HeapDataOutputStream hdos = (HeapDataOutputStream) out;
+          InternalDataSerializer.writeArrayLength(bb.remaining(), hdos);
+          hdos.write(bb);
+          return;
+        }
+      }
+      super.sendAsByteArray(out);
     }
        
     private static volatile Class dbbClass = null;

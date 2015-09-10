@@ -106,6 +106,16 @@ public abstract class OffHeapCachedDeserializable implements MemoryChunkWithRefC
       DataSerializer.writeObject(objToSend, out);
     }
   }
+  @Override
+  public void sendAsByteArray(DataOutput out) throws IOException {
+    byte[] bytes;
+    if (isSerialized()) {
+      bytes = getSerializedValue();
+    } else {
+      bytes = (byte[]) getDeserializedForReading();
+    }
+    DataSerializer.writeByteArray(bytes, out);
+  }
   public boolean checkDataEquals(@Unretained OffHeapCachedDeserializable other) {
     if (this == other) {
       return true;
