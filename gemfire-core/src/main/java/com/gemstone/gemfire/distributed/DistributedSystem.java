@@ -1584,34 +1584,38 @@ public abstract class DistributedSystem implements StatisticsFactory {
         }
 
       } else {
-        if (!existingSystems.isEmpty()) {
-          Assert.assertTrue(existingSystems.size() == 1);
+        boolean existingSystemDisconnected = false;
+        do {
+          if (!existingSystems.isEmpty()) {
+            Assert.assertTrue(existingSystems.size() == 1);
 
-          InternalDistributedSystem existingSystem =
-            (InternalDistributedSystem) existingSystems.get(0);
-          if (existingSystem.isDisconnecting()) {
-            while (existingSystem.isConnected()) {
-              boolean interrupted = Thread.interrupted();
-              try {
-                existingSystemsLock.wait(500);
-              } 
-              catch (InterruptedException ex) {
-                interrupted = true;
-              }
-              finally {
-                if (interrupted) {
-                  Thread.currentThread().interrupt();
+            InternalDistributedSystem existingSystem =
+                (InternalDistributedSystem) existingSystems.get(0);
+            if (existingSystem.isDisconnecting()) {
+              while (existingSystem.isConnected()) {
+                boolean interrupted = Thread.interrupted();
+                try {
+                  existingSystemsLock.wait(500);
+                } 
+                catch (InterruptedException ex) {
+                  interrupted = true;
+                }
+                finally {
+                  if (interrupted) {
+                    Thread.currentThread().interrupt();
+                  }
                 }
               }
+              existingSystemDisconnected = true;
+            }
+
+            if (existingSystem.isConnected()) {
+              existingSystem.validateSameProperties(config,
+                  existingSystem.isConnected());
+              return existingSystem;
             }
           }
-
-          if (existingSystem.isConnected()) {
-            existingSystem.validateSameProperties(config,
-                existingSystem.isConnected());
-            return existingSystem;
-          }
-        }
+        } while (existingSystemDisconnected);
       }
 
       // Make a new connection to the distributed system
