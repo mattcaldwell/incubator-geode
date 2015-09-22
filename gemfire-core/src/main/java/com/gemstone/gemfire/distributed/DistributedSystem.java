@@ -1586,6 +1586,7 @@ public abstract class DistributedSystem implements StatisticsFactory {
       } else {
         boolean existingSystemDisconnected = false;
         do {
+          existingSystemDisconnected = false;
           if (!existingSystems.isEmpty()) {
             Assert.assertTrue(existingSystems.size() == 1);
 
