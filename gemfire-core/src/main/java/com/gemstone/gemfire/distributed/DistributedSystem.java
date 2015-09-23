@@ -1606,8 +1606,8 @@ public abstract class DistributedSystem implements StatisticsFactory {
                     Thread.currentThread().interrupt();
                   }
                 }
+                existingSystemDisconnected = true;
               }
-              existingSystemDisconnected = true;
             }
 
             if (existingSystem.isConnected()) {
@@ -1616,7 +1616,7 @@ public abstract class DistributedSystem implements StatisticsFactory {
               return existingSystem;
             }
           }
-        } while (existingSystemDisconnected);
+        } while (existingSystemDisconnected && !existingSystems.isEmpty());
       }
 
       // Make a new connection to the distributed system
