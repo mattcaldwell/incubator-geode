@@ -898,7 +898,8 @@ public final class RemotePutMessage extends RemoteOperationMessageWithDirectRepl
     public PutReplyMessage() {
     }
 
-    private PutReplyMessage(int processorId,
+    // unit tests may call this constructor
+    PutReplyMessage(int processorId,
                             boolean result,
                             Operation op,
                             ReplyException ex,
@@ -965,13 +966,15 @@ public final class RemotePutMessage extends RemoteOperationMessageWithDirectRepl
       dm.getStats().incReplyMessageTime(NanoTimer.getTime()-startTime);
     }
 
-    /** Return oldValue in deserialized form */
+    /** Return oldValue as a byte[] or as a CachedDeserializable.
+     * This method used to deserialize a CachedDeserializable but that is too soon.
+     * This method is called during message processing. The deserialization needs
+     * to be deferred until we get back to the application thread which happens
+     * for this oldValue when they call EntryEventImpl.getOldValue.
+     */
     public Object getOldValue() {
       // oldValue field is in serialized form, either a CachedDeserializable,
       // a byte[], or null if not set
-      if (this.oldValue instanceof CachedDeserializable) {
-        return ((CachedDeserializable)this.oldValue).getDeserializedValue(null, null);
-      }
       return this.oldValue;
     }
 
@@ -1004,8 +1007,20 @@ public final class RemotePutMessage extends RemoteOperationMessageWithDirectRepl
       out.writeByte(flags);
       out.writeByte(this.op.ordinal);
       if (this.oldValueIsSerialized) {
-        byte[] oldValueBytes = (byte[]) this.oldValue;
-        out.write(oldValueBytes);
+        byte[] oldValueBytes;
+        if (this.oldValue instanceof byte[]) {
+          oldValueBytes = (byte[]) this.oldValue;
+          DataSerializer.writeObject(new VMCachedDeserializable(oldValueBytes), out);
+        } else if (this.oldValue instanceof CachedDeserializable) {
+          if (this.oldValue instanceof StoredObject) {
+            ((StoredObject) this.oldValue).sendAsCachedDeserializable(out);
+          } else {
+            DataSerializer.writeObject(this.oldValue, out);
+          }
+        } else {
+          oldValueBytes = EntryEventImpl.serialize(this.oldValue);
+          DataSerializer.writeObject(new VMCachedDeserializable(oldValueBytes), out);
+        }
       } else {
         DataSerializer.writeObject(this.oldValue, out);
       }
@@ -1045,17 +1060,13 @@ public final class RemotePutMessage extends RemoteOperationMessageWithDirectRepl
 
     @Override
     public void importOldObject(@Unretained(ENTRY_EVENT_OLD_VALUE) Object ov, boolean isSerialized) {
-      // isSerialized does not matter.
-      // toData will just call writeObject
-      // and fromData will just call readObject
+      this.oldValueIsSerialized = isSerialized;
       this.oldValue = ov;
     }
 
     @Override
     public void importOldBytes(byte[] ov, boolean isSerialized) {
-      if (isSerialized) {
-        this.oldValueIsSerialized = true;
-      }
+      this.oldValueIsSerialized = isSerialized;
       this.oldValue = ov;
     }
   }

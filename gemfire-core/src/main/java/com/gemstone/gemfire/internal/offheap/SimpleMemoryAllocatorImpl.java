@@ -42,6 +42,7 @@ import com.gemstone.gemfire.cache.CacheClosedException;
 import com.gemstone.gemfire.cache.Region;
 import com.gemstone.gemfire.distributed.internal.InternalDistributedSystem;
 import com.gemstone.gemfire.internal.DSCODE;
+import com.gemstone.gemfire.internal.DataSerializableFixedID;
 import com.gemstone.gemfire.internal.HeapDataOutputStream;
 import com.gemstone.gemfire.internal.InternalDataSerializer;
 import com.gemstone.gemfire.internal.cache.BucketRegion;
@@ -536,6 +537,15 @@ public final class SimpleMemoryAllocatorImpl implements MemoryAllocator, MemoryI
       }
       DataSerializer.writeByteArray(bytes, out);
       
+    }
+    
+    @Override
+    public void sendAsCachedDeserializable(DataOutput out) throws IOException {
+      if (!isSerialized()) {
+        throw new IllegalStateException("sendAsCachedDeserializable can only be called on serialized StoredObjects");
+      }
+      InternalDataSerializer.writeDSFIDHeader(DataSerializableFixedID.VM_CACHED_DESERIALIZABLE, out);
+      sendAsByteArray(out);
     }
 
     @Override
