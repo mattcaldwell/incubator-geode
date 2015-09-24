@@ -1,6 +1,6 @@
 package dunit;
 
-import hydra.MethExecutorResult;
+import dunit.MethExecutorResult;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

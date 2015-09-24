@@ -12,9 +12,6 @@ package com.gemstone.gemfire.cache.query.partitioned;
 
 import java.util.ArrayList;
 
-import parReg.query.unittest.NewPortfolio;
-import util.TestException;
-
 import com.gemstone.gemfire.cache.AttributesFactory;
 import com.gemstone.gemfire.cache.Cache;
 import com.gemstone.gemfire.cache.CacheClosedException;
@@ -36,6 +33,7 @@ import com.gemstone.gemfire.cache.query.QueryInvocationTargetException;
 import com.gemstone.gemfire.cache.query.QueryService;
 import com.gemstone.gemfire.cache.query.RegionNotFoundException;
 import com.gemstone.gemfire.cache.query.SelectResults;
+import com.gemstone.gemfire.cache.query.data.NewPortfolio;
 import com.gemstone.gemfire.cache.query.data.Portfolio;
 import com.gemstone.gemfire.cache.query.partitioned.PRQueryDUnitHelper.TestQueryFunction;
 import com.gemstone.gemfire.cache30.CacheSerializableRunnable;
@@ -46,6 +44,7 @@ import com.gemstone.gemfire.internal.cache.PartitionedRegionDUnitTestCase;
 import com.gemstone.gemfire.internal.i18n.LocalizedStrings;
 
 import dunit.Host;
+import dunit.TestException;
 import dunit.VM;
 
 /**

@@ -46,9 +46,8 @@ import com.gemstone.gemfire.internal.cache.tier.sockets.HAEventWrapper;
 
 import dunit.DistributedTestCase;
 import dunit.Host;
+import dunit.TestException;
 import dunit.VM;
-
-import util.TestException;
 
 /**
  * This DUnit contains various tests to ensure new implementation of ha region

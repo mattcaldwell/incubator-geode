@@ -20,8 +20,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import util.TestException;
-
 import com.gemstone.gemfire.cache.AttributesFactory;
 import com.gemstone.gemfire.cache.AttributesMutator;
 import com.gemstone.gemfire.cache.Cache;
@@ -76,6 +74,7 @@ import dunit.DistributedTestCase;
 import dunit.Host;
 import dunit.SerializableCallable;
 import dunit.SerializableRunnable;
+import dunit.TestException;
 import dunit.VM;
 
 /**

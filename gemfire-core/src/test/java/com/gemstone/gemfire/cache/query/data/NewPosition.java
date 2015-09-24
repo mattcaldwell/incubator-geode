@@ -6,7 +6,7 @@
  *=========================================================================
  */
 
-package parReg.query.unittest;
+package com.gemstone.gemfire.cache.query.data;
 
 import java.util.*;
 import java.io.Serializable;
@@ -26,7 +26,7 @@ import com.gemstone.gemfire.cache.Declarable;
  * @author GemStone Systems, Inc.
  * @since 4.0
  */
-public class Position implements Declarable, Serializable, Comparable {
+public class NewPosition implements Declarable, Serializable, Comparable {
 
   private static final Random rng = new Random();
 
@@ -64,7 +64,7 @@ public class Position implements Declarable, Serializable, Comparable {
   }
 
   public String toString(){
-    return "Position [secId="+secId+" qty="+this.qty+" mktValue="+mktValue+"]";
+    return "NewPosition [secId="+secId+" qty="+this.qty+" mktValue="+mktValue+"]";
   }
   
   public static String toString(List aList) {
@@ -72,8 +72,8 @@ public class Position implements Declarable, Serializable, Comparable {
     aStr.append("List of size " + aList.size() + "\n");
     for (int i = 0; i < aList.size(); i++) {
        Object anObj = aList.get(i);
-       if (anObj instanceof Position) {
-          Position p = (Position)(anObj);
+       if (anObj instanceof NewPosition) {
+          NewPosition p = (NewPosition)(anObj);
           aStr.append(p.toString());
        }
        aStr.append("\n");
@@ -89,7 +89,7 @@ public class Position implements Declarable, Serializable, Comparable {
        return false;
     }
     if (anObj.getClass() == this.getClass()) {
-       Position pos = (Position)anObj;
+       NewPosition pos = (NewPosition)anObj;
        if ((pos.mktValue != this.mktValue) || (pos.qty != this.qty))  {
           return false;
        }
@@ -142,13 +142,12 @@ public class Position implements Declarable, Serializable, Comparable {
     if( o == this) {
       return 0;
     }else {
-      if (o instanceof Position) {
-        return Integer.valueOf(this.hashCode()).compareTo(Integer.valueOf(((Position)o).hashCode()));
+      if (o instanceof NewPosition) {
+        return Integer.valueOf(this.hashCode()).compareTo(Integer.valueOf(((NewPosition)o).hashCode()));
       } else {
         return -1;
       }
     }
   }
 }
-
 

@@ -11,7 +11,7 @@ import java.util.Properties;
 
 import org.apache.logging.log4j.Logger;
 
-import util.TestException;
+import dunit.TestException;
 
 import com.gemstone.gemfire.distributed.DistributedSystem;
 import com.gemstone.gemfire.internal.logging.LogService;

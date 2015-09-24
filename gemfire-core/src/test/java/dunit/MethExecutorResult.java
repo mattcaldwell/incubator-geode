@@ -6,7 +6,7 @@
  *========================================================================
  */
 
-package hydra;
+package dunit;
 
 import java.io.*;
 
@@ -72,6 +72,19 @@ public class MethExecutorResult implements Serializable {
   }
 
   /**
+   * This constructor is invoked from the closed-source hydra-based
+   * dunit when converting a hydra.MethExecutorResult to a
+   * dunit.MethExecutorResult.
+   */
+  public MethExecutorResult(Object aResult, Throwable anException, String anExceptionClassName, String anExceptionMessage, String aStackTrace) {
+    this.result = aResult;
+    this.exception = anException;
+    this.exceptionClassName = anExceptionClassName;
+    this.exceptionMessage = anExceptionMessage;
+    this.stackTrace = aStackTrace;
+  }
+
+  /**
    * This constructor is invoked when invoking a method resulted in an
    * exception being thrown.  The "result" is set to {@link
    * #EXCEPTION_OCCURRED}.  If the exception could not be serialized,
@@ -85,26 +98,19 @@ public class MethExecutorResult implements Serializable {
 
     StringWriter sw = new StringWriter();
 
-    if (thr instanceof SchedulingOrder) {
-      this.stackTrace = "No stack trace for SchedulingOrder\n";
+    thr.printStackTrace(new PrintWriter(sw, true));
+    this.stackTrace = sw.toString();
+
+    try {
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      ObjectOutputStream oos = new ObjectOutputStream(baos);
+      oos.writeObject(thr);
       this.exception = thr;
 
-
-    } else {
-      thr.printStackTrace(new PrintWriter(sw, true));
-      this.stackTrace = sw.toString();
-
-      try {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(baos);
-        oos.writeObject(thr);
-        this.exception = thr;
-
-      } catch (IOException ex) {
-        sw = new StringWriter();
-        ex.printStackTrace(new PrintWriter(sw, true));
-        this.exception = new IOException(sw.toString());
-      }
+    } catch (IOException ex) {
+      sw = new StringWriter();
+      ex.printStackTrace(new PrintWriter(sw, true));
+      this.exception = new IOException(sw.toString());
     }
   }
 
@@ -175,3 +181,4 @@ public class MethExecutorResult implements Serializable {
   }
 
 }
+

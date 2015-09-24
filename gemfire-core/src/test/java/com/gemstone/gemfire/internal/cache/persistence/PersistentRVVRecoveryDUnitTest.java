@@ -16,8 +16,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import util.TestException;
-
 import com.gemstone.gemfire.DataSerializer;
 import com.gemstone.gemfire.cache.AttributesFactory;
 import com.gemstone.gemfire.cache.Cache;
@@ -61,6 +59,7 @@ import dunit.AsyncInvocation;
 import dunit.Host;
 import dunit.SerializableCallable;
 import dunit.SerializableRunnable;
+import dunit.TestException;
 import dunit.VM;
 
 public class PersistentRVVRecoveryDUnitTest extends PersistentReplicatedTestBase {

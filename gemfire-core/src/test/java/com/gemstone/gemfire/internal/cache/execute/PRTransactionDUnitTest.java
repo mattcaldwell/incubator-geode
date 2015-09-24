@@ -12,8 +12,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import util.TestException;
-
 import com.gemstone.gemfire.cache.CacheTransactionManager;
 import com.gemstone.gemfire.cache.EntryEvent;
 import com.gemstone.gemfire.cache.Region;
@@ -36,6 +34,7 @@ import com.gemstone.gemfire.internal.cache.execute.data.Shipment;
 import com.gemstone.gemfire.internal.cache.execute.data.ShipmentId;
 
 import dunit.SerializableCallable;
+import dunit.TestException;
 
 /**
  * Test for co-located PR transactions.

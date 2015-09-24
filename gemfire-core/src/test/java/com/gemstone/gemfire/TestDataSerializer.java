@@ -14,7 +14,7 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-import util.TestException;
+import dunit.TestException;
 
 import com.gemstone.gemfire.internal.cache.tier.sockets.DataSerializerPropogationDUnitTest;
 

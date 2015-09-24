@@ -25,7 +25,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import util.TestException;
+import dunit.TestException;
 
 import com.gemstone.gemfire.cache.Region;
 import com.gemstone.gemfire.cache.query.Index;

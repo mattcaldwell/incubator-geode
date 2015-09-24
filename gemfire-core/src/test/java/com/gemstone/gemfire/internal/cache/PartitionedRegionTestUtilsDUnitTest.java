@@ -9,8 +9,6 @@
 
 package com.gemstone.gemfire.internal.cache;
 
-import hydra.GsRandom;
-
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
@@ -18,6 +16,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import com.gemstone.gemfire.DataSerializable;
@@ -80,7 +79,7 @@ public class PartitionedRegionTestUtilsDUnitTest extends
     vm0.invoke(new CacheSerializableRunnable("GetSomeKeys") {
       public void run2() throws CacheException {
         PartitionedRegion pr = (PartitionedRegion) getCache().getRegion(r);
-        GsRandom rand = new GsRandom(123);
+        Random rand = new Random(123);
         // Assert that its empty
         for(int i=0; i<5; i++) {
           getLogWriter().info("Invocation " + i + " of getSomeKeys");

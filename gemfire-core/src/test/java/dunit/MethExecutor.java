@@ -6,7 +6,7 @@
  *========================================================================
  */
 
-package hydra;
+package dunit;
 
 //import java.io.*;
 import java.lang.reflect.Constructor;
@@ -375,9 +375,10 @@ public class MethExecutor {
   }
   public static void main(String[] args) {
     MethExecutorResult result = null;
-    result = MethExecutor.execute( "hydra.MethExecutor", "testMethod1" );
+    result = MethExecutor.execute( "dunit.MethExecutor", "testMethod1" );
     System.out.println(result.toString());
-    result = MethExecutor.execute( "hydra.MethExecutor", "testMethod2" );
+    result = MethExecutor.execute( "dunit.MethExecutor", "testMethod2" );
     System.out.println(result.toString());
   }
 }
+

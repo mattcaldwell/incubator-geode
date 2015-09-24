@@ -8,7 +8,7 @@
 /**
  * 
  */
-package batterytest.greplogs;
+package com.gemstone.gemfire.test.junit.greplogs;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -177,3 +177,4 @@ public class ExpectedStrings {
     return expected;
   }
 }
+

@@ -5,7 +5,7 @@
  * one or more patents listed at http://www.pivotal.io/patents.
  *=========================================================================
  */
-package batterytest.greplogs;
+package com.gemstone.gemfire.test.junit.greplogs;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -286,3 +286,4 @@ public class LogConsumer {
   }
 
 }
+

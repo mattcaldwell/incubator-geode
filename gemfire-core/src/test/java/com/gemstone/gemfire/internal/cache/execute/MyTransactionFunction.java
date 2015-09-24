@@ -10,7 +10,7 @@ package com.gemstone.gemfire.internal.cache.execute;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import util.TestException;
+import dunit.TestException;
 
 import com.gemstone.gemfire.cache.CacheTransactionManager;
 import com.gemstone.gemfire.cache.CommitConflictException;

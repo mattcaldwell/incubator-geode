@@ -12,8 +12,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
-import util.TestException;
-
 import com.gemstone.gemfire.cache.AttributesFactory;
 import com.gemstone.gemfire.cache.Cache;
 import com.gemstone.gemfire.cache.CacheException;
@@ -39,6 +37,7 @@ import com.gemstone.gemfire.cache.client.internal.Connection;
 
 import dunit.DistributedTestCase;
 import dunit.Host;
+import dunit.TestException;
 import dunit.VM;
 
 /**

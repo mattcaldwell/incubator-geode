@@ -7,9 +7,6 @@
  */
 package dunit.standalone;
 
-import hydra.Log;
-import hydra.MethExecutorResult;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -40,8 +37,8 @@ import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.apache.logging.log4j.core.layout.PatternLayout;
 import org.junit.Assert;
 
-import batterytest.greplogs.ExpectedStrings;
-import batterytest.greplogs.LogConsumer;
+import com.gemstone.gemfire.test.junit.greplogs.ExpectedStrings;
+import com.gemstone.gemfire.test.junit.greplogs.LogConsumer;
 
 import com.gemstone.gemfire.distributed.Locator;
 import com.gemstone.gemfire.internal.AvailablePortHelper;
@@ -50,6 +47,7 @@ import com.gemstone.gemfire.internal.logging.LogService;
 import dunit.BounceResult;
 import dunit.DUnitEnv;
 import dunit.Host;
+import dunit.MethExecutorResult;
 import dunit.RemoteDUnitVMIF;
 import dunit.SerializableCallable;
 import dunit.VM;
@@ -136,9 +134,6 @@ public class DUnitLauncher {
 
   
   private static void launch() throws URISyntaxException, AlreadyBoundException, IOException, InterruptedException, NotBoundException  {
-//  initialize the log writer that hydra uses
-    Log.createLogWriter( "dunit-master", LOG_LEVEL );
-
     DUNIT_SUSPECT_FILE = new File(SUSPECT_FILENAME);
     DUNIT_SUSPECT_FILE.delete();
     DUNIT_SUSPECT_FILE.deleteOnExit();

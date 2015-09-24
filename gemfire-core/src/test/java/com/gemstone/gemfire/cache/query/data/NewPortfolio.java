@@ -5,9 +5,7 @@
  * more patents listed at http://www.pivotal.io/patents.
  *=========================================================================
  */
-package parReg.query.unittest;
-
-import hydra.Log;
+package com.gemstone.gemfire.cache.query.data;
 
 import java.io.Serializable;
 import java.util.*;
@@ -112,7 +110,7 @@ public class NewPortfolio implements Serializable {
         secId -= NUM_OF_SECURITIES;
       props.setProperty("secId", new Integer(secId).toString());
       
-      Position pos = new Position();
+      NewPosition pos = new NewPosition();
       pos.init(props);
       this.positions.put(pos.getSecId(), pos);
     }
@@ -153,36 +151,27 @@ public class NewPortfolio implements Serializable {
     if (anObj == null) {
        return false;
     }
-//    Log.getLogWriter().info("comparing\n"+this+"\n and "+anObj);
 
     if (anObj.getClass().getName().equals(this.getClass().getName())) { // cannot do class identity check for pdx tets
-//      Log.getLogWriter().info("checkpoint 1,.this class is checked " + this.getClass().getName() );
        NewPortfolio np = (NewPortfolio)anObj;
        if (!np.name.equals(this.name) || (np.id != this.id) || !np.type.equals(this.type) || !np.status.equals(this.status)) {
-//         Log.getLogWriter().info("checkpoint 1,obj " +np.name + " " + np.id + " " + np.type );
          return false;
        }
-//       Log.getLogWriter().info("checkpoint 2, NP name, id checked" );
        
        if (np.positions == null) {
           if (this.positions != null) {
             return false;
           }
        } else {
-//         Log.getLogWriter().info("checkpoint 3, checking position size" );
          if (np.positions.size() != this.positions.size()) {
-           Log.getLogWriter().info("checkpoint 3, position size failed" );
            return false;
          }
          else {                 //loops thru the map of positions
            Iterator itr = np.positions.values().iterator();
-           Position pos;
+           NewPosition pos;
            while (itr.hasNext()) {
-//             Log.getLogWriter().info("checkpoint 4, to check iteration" );
-             pos = (Position)itr.next();
-//             Log.getLogWriter().info("checkpoint 4, to check pos" );
+             pos = (NewPosition)itr.next();
              if (!this.positions.containsValue(pos)){
-//               Log.getLogWriter().info("checkpoint 5, check pos failed" );                                            
                return false;
              }            
            }
@@ -190,7 +179,6 @@ public class NewPortfolio implements Serializable {
        }
     } else {
       //not same class
-//      Log.getLogWriter().info("checkpoint 6, not the same class");
        return false;
     }
     return true;
@@ -222,7 +210,6 @@ public class NewPortfolio implements Serializable {
     fieldMap.put("type", type);
     fieldMap.put("positions", positions);
     fieldMap.put("undefinedTestField", undefinedTestField);
-//    Log.getLogWriter().info("created map in tests/parReg.query.NewPortfolio: " + fieldMap);
     return fieldMap;
   }
 
@@ -230,7 +217,6 @@ public class NewPortfolio implements Serializable {
    *  by createPdxHelperMap()
    */
   public void restoreFromPdxHelperMap(Map aMap) {
-//    Log.getLogWriter().info("restoring from map into " + this.getClass().getName() + ": " + aMap);
     this.myVersion = (String)aMap.get("myVersion");
     this.id = (Integer)aMap.get("id");
     this.name = (String)aMap.get("name");
@@ -238,7 +224,6 @@ public class NewPortfolio implements Serializable {
     this.type = (String)aMap.get("type");
     this.positions = (Map)aMap.get("positions");
     this.undefinedTestField = (String)aMap.get("undefinedTestField");
-//    Log.getLogWriter().info("returning instance from map in tests/parReg.query.NewPortfolio: " + this);
   }
 
   @Override
@@ -248,7 +233,7 @@ public class NewPortfolio implements Serializable {
     sb.append(" name=" + this.name);
     
     Iterator iter = positions.entrySet().iterator();
-    sb.append(" Positions:[ ");
+    sb.append(" NewPositions:[ ");
     while (iter.hasNext()) {
       Map.Entry entry = (Map.Entry) iter.next();
       sb.append(entry.getKey() + ":" + entry.getValue() + ", ");
@@ -258,6 +243,4 @@ public class NewPortfolio implements Serializable {
   }
 
 }
-
-  
 

@@ -9,7 +9,6 @@ package com.gemstone.gemfire.cache30;
 
 import com.gemstone.gemfire.cache.*;
 
-import util.TestException;
 import dunit.*;
 import junit.framework.AssertionFailedError;
 

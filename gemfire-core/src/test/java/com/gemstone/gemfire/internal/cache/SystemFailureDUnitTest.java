@@ -18,12 +18,11 @@ import com.gemstone.gemfire.distributed.internal.InternalDistributedSystem;
 
 import dunit.Host;
 import dunit.RMIException;
+import dunit.TestException;
 import dunit.VM;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
-import util.TestException;
 
 import junit.framework.Assert;
 

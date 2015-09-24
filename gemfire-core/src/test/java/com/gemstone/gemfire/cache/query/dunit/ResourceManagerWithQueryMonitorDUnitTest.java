@@ -13,8 +13,6 @@ import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import util.TestException;
-
 import com.gemstone.gemfire.cache.AttributesFactory;
 import com.gemstone.gemfire.cache.CacheException;
 import com.gemstone.gemfire.cache.DataPolicy;
@@ -61,6 +59,7 @@ import dunit.AsyncInvocation;
 import dunit.DistributedTestCase;
 import dunit.Host;
 import dunit.SerializableCallable;
+import dunit.TestException;
 import dunit.VM;
 
 public class ResourceManagerWithQueryMonitorDUnitTest extends BridgeTestCase {

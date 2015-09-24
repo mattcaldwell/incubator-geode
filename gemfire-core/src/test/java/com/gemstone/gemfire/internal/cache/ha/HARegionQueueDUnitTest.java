@@ -13,8 +13,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import util.TestException;
-
 import junit.framework.Assert;
 
 import com.gemstone.gemfire.LogWriter;
@@ -37,6 +35,7 @@ import com.gemstone.gemfire.internal.cache.HARegion;
 
 import dunit.DistributedTestCase;
 import dunit.Host;
+import dunit.TestException;
 import dunit.VM;
 
 /**

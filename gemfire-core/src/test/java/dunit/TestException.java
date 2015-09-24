@@ -5,7 +5,7 @@
  * more patents listed at http://www.pivotal.io/patents.
  *=========================================================================
  */
-package util;
+package dunit;
 
 import java.lang.Error;
 
@@ -24,3 +24,4 @@ public TestException(StringBuffer name) {
 }
 
 }
+

@@ -12,7 +12,6 @@ import java.io.*;
 import java.text.BreakIterator;
 import java.util.*;
 import junit.framework.TestCase;
-import perffmwk.Formatter;
 
 /**
  * This class is a Javadoc <A
@@ -27,6 +26,22 @@ import perffmwk.Formatter;
  * @since 3.0
  */
 public class UnitTestDoclet {
+
+  /** The width (in characters) of the report output.
+   *
+   * @see #center(String, PrintWriter) */
+  protected static final int WIDTH = 80;
+
+  /**
+   *  Centers the given string on the <code>PrintWriter</code>
+   */
+  public static void center(String s, PrintWriter pw) {
+    int indent = (WIDTH / 2) - (s.length() / 2);
+    for (int i = 0; i < indent; i++) {
+      pw.print(" ");
+    }
+    pw.println(s);
+  }
 
   /**
    * Returns the number of arguments for the given command option
@@ -95,8 +110,8 @@ public class UnitTestDoclet {
     try {
       PrintWriter pw =
         new PrintWriter(new FileWriter(outputFile));
-      Formatter.center("GemFire Unit Test Summary", pw);
-      Formatter.center(new Date().toString(), pw);
+      center("GemFire Unit Test Summary", pw);
+      center(new Date().toString(), pw);
       pw.println("");
 
       ClassDoc[] classes = root.classes();

@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Assert;
-import util.TestException;
 
 public class VersionClassLoader {
 

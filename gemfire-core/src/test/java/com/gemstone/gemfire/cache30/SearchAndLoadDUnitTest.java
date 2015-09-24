@@ -11,7 +11,6 @@ package com.gemstone.gemfire.cache30;
 import com.gemstone.gemfire.cache.*;
 
 import dunit.*;
-//import hydra.ClientMgr;
 
 /**
  * This class tests various search load and write scenarios for distributed regions

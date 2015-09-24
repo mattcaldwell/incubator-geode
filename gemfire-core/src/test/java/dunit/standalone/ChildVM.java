@@ -7,9 +7,6 @@
  */
 package dunit.standalone;
 
-import hydra.HydraRuntimeException;
-import hydra.Log;
-
 import java.rmi.Naming;
 
 import org.apache.logging.log4j.Logger;
@@ -24,10 +21,6 @@ import dunit.standalone.DUnitLauncher.MasterRemote;
  *
  */
 public class ChildVM {
-  
-  static {
-    createHydraLogWriter();
-  }
   
   private final static Logger logger = LogService.getLogger();
   
@@ -53,10 +46,4 @@ public class ChildVM {
     }
   }
 
-  private static void createHydraLogWriter() {
-    try {
-      Log.createLogWriter("dunit-childvm", "fine");
-    } catch (HydraRuntimeException ignore) {
-    }
-  }
 }

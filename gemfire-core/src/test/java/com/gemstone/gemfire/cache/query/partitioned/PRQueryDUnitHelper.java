@@ -23,9 +23,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
-import parReg.query.unittest.NewPortfolio;
-import util.TestException;
-
 import com.gemstone.gemfire.CancelException;
 import com.gemstone.gemfire.LogWriter;
 import com.gemstone.gemfire.cache.AttributesFactory;
@@ -60,6 +57,7 @@ import com.gemstone.gemfire.cache.query.QueryInvocationTargetException;
 import com.gemstone.gemfire.cache.query.QueryService;
 import com.gemstone.gemfire.cache.query.RegionNotFoundException;
 import com.gemstone.gemfire.cache.query.SelectResults;
+import com.gemstone.gemfire.cache.query.data.NewPortfolio;
 import com.gemstone.gemfire.cache.query.data.Portfolio;
 import com.gemstone.gemfire.cache.query.data.PortfolioData;
 import com.gemstone.gemfire.cache.query.data.Position;
@@ -81,6 +79,8 @@ import com.gemstone.gemfire.internal.cache.xmlcache.CacheXmlGenerator;
 import com.gemstone.gemfire.util.test.TestUtil;
 
 import dunit.SerializableRunnable;
+import dunit.TestException;
+
 
 /**
  * This is a helper class for the various Partitioned Query DUnit Test Cases
