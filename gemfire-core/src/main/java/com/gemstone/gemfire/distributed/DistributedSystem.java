@@ -1584,39 +1584,37 @@ public abstract class DistributedSystem implements StatisticsFactory {
         }
 
       } else {
-        boolean existingSystemDisconnected = false;
-        do {
-          existingSystemDisconnected = false;
-          if (!existingSystems.isEmpty()) {
-            Assert.assertTrue(existingSystems.size() == 1);
+        boolean existingSystemConnected = true;
+        while (!existingSystems.isEmpty() && existingSystemConnected) {
+          Assert.assertTrue(existingSystems.size() == 1);
+          existingSystemConnected = false;
 
-            InternalDistributedSystem existingSystem =
-                (InternalDistributedSystem) existingSystems.get(0);
-            if (existingSystem.isDisconnecting()) {
-              while (existingSystem.isConnected()) {
-                boolean interrupted = Thread.interrupted();
-                try {
-                  existingSystemsLock.wait(500);
-                } 
-                catch (InterruptedException ex) {
-                  interrupted = true;
-                }
-                finally {
-                  if (interrupted) {
-                    Thread.currentThread().interrupt();
-                  }
-                }
-                existingSystemDisconnected = true;
+          InternalDistributedSystem existingSystem =
+              (InternalDistributedSystem) existingSystems.get(0);
+          if (existingSystem.isDisconnecting()) {
+            while (existingSystem.isConnected()) {
+              boolean interrupted = Thread.interrupted();
+              try {
+                existingSystemsLock.wait(500);
+              } 
+              catch (InterruptedException ex) {
+                interrupted = true;
               }
-            }
-
-            if (existingSystem.isConnected()) {
-              existingSystem.validateSameProperties(config,
-                  existingSystem.isConnected());
-              return existingSystem;
+              finally {
+                if (interrupted) {
+                  Thread.currentThread().interrupt();
+                }
+              }
+              existingSystemConnected = true;
             }
           }
-        } while (existingSystemDisconnected && !existingSystems.isEmpty());
+
+          if (existingSystem.isConnected()) {
+            existingSystem.validateSameProperties(config,
+                existingSystem.isConnected());
+            return existingSystem;
+          }
+        }
       }
 
       // Make a new connection to the distributed system
